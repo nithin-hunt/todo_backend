@@ -47,6 +47,26 @@ router.get("/:id", async(req,res) => {
     }
 });
 
+router.put("/:id", async(req,res) => {
+    try {
+        const todo = await Todo.findOne({where: {id: req.params.id}});
+        if(!todo) {
+            return res.status(400).json("No Todo found");
+        }
+
+        const {title, description, dueDate, completed, priority} = req.body;
+        if(!title) {
+            return res.status(400).json("Title is required");
+        }
+
+        await Todo.update({title, description, dueDate, completed, priority}, {where: {id: req.params.id}})
+        const updatedTodo = await Todo.findOne({where: {id: req.params.id}});
+        return res.status(200).json(updatedTodo);
+    }catch(e) {
+        return res.status(500).json(e);
+    }       
+});
+
 
 
 
