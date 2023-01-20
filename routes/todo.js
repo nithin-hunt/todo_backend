@@ -51,7 +51,7 @@ router.put("/:id", async(req,res) => {
     try {
         const todo = await Todo.findOne({where: {id: req.params.id}});
         if(!todo) {
-            return res.status(400).json("No Todo found");
+            return res.status(404).json("No Todo found");
         }
 
         const {title, description, dueDate, completed, priority} = req.body;
@@ -67,6 +67,18 @@ router.put("/:id", async(req,res) => {
     }       
 });
 
+router.delete("/:id", async(req,res) => {
+    try{
+        const todo = await Todo.destroy({where: {id: req.params.id}});
+        if(!todo) {
+            return res.status(404).json("todo doesn't exist");
+        }
+
+        return res.status(200).json("todo deleted successfully");
+    } catch(e) {
+        res.status(400).json({error: e});
+    }
+})
 
 
 
