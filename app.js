@@ -8,6 +8,8 @@ const todoRoutes = require('./routes/todo');
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+app.use("/api/todo", todoRoutes);
+
 const PORT = 5000;
 
 const start = () => {
