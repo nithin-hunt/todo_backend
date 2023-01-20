@@ -3,6 +3,11 @@ const app = express ();
 
 const {connectDB} = require('./config/db');
 
+const todoRoutes = require('./routes/todo');
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 const PORT = 5000;
 
 const start = () => {
