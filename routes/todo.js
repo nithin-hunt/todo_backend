@@ -24,6 +24,28 @@ router.post("/", async(req,res) => {
     }
 });
 
+router.get("/", async(req,res) => {
+    try {
+        const todos = await Todo.findAll();
+        return res.status(200).json(todos);
+    } catch (e) {
+        return res.status(500).json(e);
+        
+    }
+});
+
+router.get("/:id", async(req,res) => {
+    try {
+        const todo = await Todo.findOne({where: {id: req.params.id}});
+        if(!todo) {
+            return res.status(404).json("No Todo found")
+        }
+        return res.status(200).json(todo);
+    } catch (e) {
+        return res.status(500).json(e);
+        
+    }
+});
 
 
 
